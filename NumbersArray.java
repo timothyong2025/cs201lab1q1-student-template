@@ -43,21 +43,17 @@ public class NumbersArray {
         }
 
         //track current array
-        ArrayList<Integer> seen = new ArrayList<>();
-        ArrayList<Integer> output = new ArrayList<>();
+        Set<Integer> seen = new HashSet<>();
+        Set<Integer> duplicates = new LinkedHashSet<>();
 
         //look through array for each element and check if there's a dupe
         for (int num : input){
-            if(seen.contains(num)){
-                output.add(num);
-            }
-            if(!seen.contains(num)){
-                seen.add(num);
+            if(!seen.add(num)){
+                duplicates.add(num);
             }
         }
 
-        int[] output2 = output.stream().mapToInt(Integer::intValue).toArray();
-        return output2;
+        return duplicates.stream().mapToInt(Integer::intValue).toArray();
 
     }
 
@@ -68,31 +64,26 @@ public class NumbersArray {
         }
 
         //track current array
-        ArrayList<Integer> seen = new ArrayList<>();
-        ArrayList<Integer> dupe = new ArrayList<>();
-        ArrayList<Integer> output = new ArrayList<>();
+        Set<Integer> seen = new HashSet<>();
+        Set<Integer> duplicates = new HashSet<>();
 
-        //look through array for each element and check if there's a dupe
+        // First pass: Identify what is a duplicate
         for (int num : input){
-            if(seen.contains(num)){
-                dupe.add(num);
-            }
-            if(!seen.contains(num)){
-                seen.add(num);
+            if (!seen.add(num)) {
+                duplicates.add(num);
             }
         }
         
+        // Second pass: Only collect numbers that were NEVER duplicated
+        ArrayList<Integer> output = new ArrayList<>();
         for (int num : input){
-            if(!dupe.contains(num)){
+            if(!duplicates.contains(num)){
                 output.add(num);
             }
-            
         }
 
+        return output.stream().mapToInt(Integer::intValue).toArray();
 
-
-        int[] output2 = output.stream().mapToInt(Integer::intValue).toArray();
-        return output2;
 
     }
 
