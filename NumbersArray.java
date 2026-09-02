@@ -36,7 +36,7 @@ public class NumbersArray {
     }
 
 
-    public static int[] findDuplicates(Integer[] input){
+    public static Integer[] findDuplicates(Integer[] input){
         //if invalid input
         if(input == null || input.length == 0){
             return null;
@@ -53,36 +53,33 @@ public class NumbersArray {
             }
         }
 
-        return duplicates.stream().mapToInt(Integer::intValue).toArray();
+        return duplicates.toArray(new Integer[0]); 
 
     }
 
-    public static int[] findUnique(Integer[] input){
+    public static Integer[] findUnique(Integer[] input){
         //if invalid input
         if(input == null || input.length == 0){
             return null;
         }
 
-        //track current array
         Set<Integer> seen = new HashSet<>();
         Set<Integer> duplicates = new HashSet<>();
 
-        // First pass: Identify what is a duplicate
         for (int num : input){
             if (!seen.add(num)) {
                 duplicates.add(num);
             }
         }
         
-        // Second pass: Only collect numbers that were NEVER duplicated
         ArrayList<Integer> output = new ArrayList<>();
         for (int num : input){
             if(!duplicates.contains(num)){
                 output.add(num);
             }
         }
-
-        return output.stream().mapToInt(Integer::intValue).toArray();
+        //if this works im genuinely goijg  tyo lose my mind
+        return output.toArray(new Integer[0]);
 
 
     }
